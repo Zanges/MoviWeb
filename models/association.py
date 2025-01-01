@@ -7,3 +7,6 @@ class UserMovie(db.Model):
     user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     movie_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('movie.id'), primary_key=True)
     rating: Mapped[int] = mapped_column(db.Integer, nullable=False)
+
+    user = db.relationship('User', back_populates='movies')
+    movie = db.relationship('Movie', back_populates='users')

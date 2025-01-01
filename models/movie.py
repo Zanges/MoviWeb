@@ -13,8 +13,7 @@ class Movie(db.Model):
 
     director = db.relationship("Director", back_populates="movies")
 
-    user_associations = db.relationship('UserMovie', back_populates='movie')
-    liked_by_users = db.relationship('User', secondary='user_movie', viewonly=True)
+    users = db.relationship('UserMovie', back_populates='movie')
 
     def __str__(self):
         return self.title
