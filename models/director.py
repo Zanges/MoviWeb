@@ -16,3 +16,11 @@ class Director(db.Model):
 
     def __repr__(self):
         return f"<Director {self.name}>"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "birth_date": self.birth_date,
+            "date_of_death": self.date_of_death,
+        }

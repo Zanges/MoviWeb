@@ -20,3 +20,11 @@ class Movie(db.Model):
 
     def __repr__(self):
         return f"<Movie {self.title}>"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "release_date": self.release_date,
+            "director_id": self.director_id,
+        }
