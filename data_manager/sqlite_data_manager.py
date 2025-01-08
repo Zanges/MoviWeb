@@ -5,10 +5,18 @@ from models.movie import Movie
 from models.user import User
 
 
+INSTANCE = None
+
+
 class SQLiteDataManager(DataManagerInterface):
     def __init__(self, db_path: str, app):
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
         db.init_app(app)
+
+        global INSTANCE
+        if INSTANCE is not None:
+            raise Exception("Only one instance of SQLiteDataManager is allowed")
+        INSTANCE = self
 
     @staticmethod
     def get_user_list() -> list[User]:
