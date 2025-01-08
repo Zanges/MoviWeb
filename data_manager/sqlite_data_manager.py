@@ -7,31 +7,18 @@ from models.user import User
 
 class SQLiteDataManager(DataManagerInterface):
     def __init__(self, db_path: str, app):
-        super().__init__()
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
         db.init_app(app)
-
-    def get_current_user_name(self) -> str:
-        """ Get the current user's name """
-        return self.get_user().name
 
     @staticmethod
     def get_user_list() -> list[User]:
         """ Get a list of all users """
         return User.query.all()
 
-    def get_user(self) -> User:
-        """ Get the current user """
-        return User.query.get(self._current_user_id)
-
     @staticmethod
     def get_user_by_id(user_id: int) -> User:
         """ Get a user by their id """
         return User.query.get(user_id)
-
-    def get_user_movies(self) -> list:
-        """ Get a list of all movies for the current user """
-        return self.get_user().movies
 
     @staticmethod
     def add_new_user(user: User) -> User:
@@ -52,38 +39,15 @@ class SQLiteDataManager(DataManagerInterface):
         db.session.commit()
         return user
 
-    def add_movie_to_user(self, movie: Movie) -> User:
-        """ Add a movie to the current user """
-        user_id = self._current_user_id
-        movie_id = movie.id
-
-        association = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-
-        if not association:
-            # Create a new association
-            association = UserMovie(user_id=user_id, movie_id=movie_id)
-            db.session.add(association)
-        db.session.commit()
-
-        return self.get_user()
-
-    def remove_movie_from_user(self, movie: Movie) -> User:
-        """ Remove a movie from the current user """
-        user_id = self._current_user_id
-        movie_id = movie.id
-
-        association = UserMovie.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-
-        if association:
-            db.session.delete(association)
-        db.session.commit()
-
-        return self.get_user()
-
     @staticmethod
     def get_full_movie_list() -> list[Movie]:
         """ Get a list of all movies """
         return Movie.query.all()
+
+    @staticmethod
+    def get_user_movie_list(user: User) -> list[Movie]:
+        """ Get a list of all movies a user has """
+        return [user_movie.movie for user_movie in user.movies]
 
     @staticmethod
     def get_movie_by_id(movie_id: int) -> Movie:
@@ -94,6 +58,21 @@ class SQLiteDataManager(DataManagerInterface):
     def get_movies_by_title(title: str) -> list[Movie]:
         """ Get a list of movies by their title """
         return Movie.query.filter_by(title=title).all()
+
+    @staticmethod
+    def add_movie_to_user(user: User, movie: Movie) -> UserMovie:
+        """ Add a movie to a user's list """
+        user_movie = UserMovie(user=user, movie=movie)
+        db.session.add(user_movie)
+        db.session.commit()
+        return user_movie
+
+    @staticmethod
+    def remove_movie_from_user(user: User, movie: Movie) -> None:
+        """ Remove a movie from a user's list """
+        user_movie = UserMovie.query.filter_by(user=user, movie=movie).first()
+        db.session.delete(user_movie)
+        db.session.commit()
 
     @staticmethod
     def add_new_movie(movie: Movie) -> Movie:
