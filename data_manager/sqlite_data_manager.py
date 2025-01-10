@@ -106,4 +106,11 @@ class SQLiteDataManager(DataManagerInterface):
     def get_director_by_name(name: str) -> Director:
         """ Get a director by their name """
         return Director.query.filter_by(name=name).first()
+
+    @staticmethod
+    def add_director(director: Director) -> Director:
+        """ Add a new director to the database """
+        db.session.add(director)
+        db.session.commit()
+        return director
     
