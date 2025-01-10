@@ -1,6 +1,7 @@
 from data_manager.data_manager_interface import DataManagerInterface
 from models import db
 from models.association import UserMovie
+from models.director import Director
 from models.movie import Movie
 from models.user import User
 
@@ -100,4 +101,9 @@ class SQLiteDataManager(DataManagerInterface):
         """ Update a movie in the database """
         db.session.commit()
         return movie
+
+    @staticmethod
+    def get_director_by_name(name: str) -> Director:
+        """ Get a director by their name """
+        return Director.query.filter_by(name=name).first()
     
