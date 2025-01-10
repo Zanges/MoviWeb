@@ -11,14 +11,13 @@ class Movie(db.Model):
     poster: Mapped[str] = mapped_column(db.String(500), nullable=True)
 
     directors = db.relationship(
-        'Movie',
+        'Director',
         secondary=MovieDirector.__table__,
-        back_populates='movie'
+        back_populates='movies'
     )
 
     users = db.relationship(
         'UserMovie',
-        secondary=UserMovie.__table__,
         back_populates='movie'
     )
 

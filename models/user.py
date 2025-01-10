@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
 from . import db
-from .association import UserMovie
 
 
 class User(db.Model):
@@ -9,8 +8,7 @@ class User(db.Model):
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
 
     movies = db.relationship(
-        'Movie',
-        secondary=UserMovie.__table__,
+        'UserMovie',
         back_populates='user'
     )
 
