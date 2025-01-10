@@ -7,7 +7,8 @@ from .association import MovieDirector, UserMovie
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(db.String(100), nullable=False)
-    release_date: Mapped[str] = mapped_column(db.Date, nullable=True)
+    year: Mapped[int] = mapped_column(db.Integer, nullable=True)
+    poster: Mapped[str] = mapped_column(db.String(500), nullable=True)
 
     directors = db.relationship(
         'Movie',
