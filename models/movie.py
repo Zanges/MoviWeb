@@ -1,19 +1,25 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
 from . import db
+from .association import MovieDirector, UserMovie
 
 
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(db.String(100), nullable=False)
     release_date: Mapped[str] = mapped_column(db.Date, nullable=True)
-    director_id: Mapped[int] = mapped_column(
-        db.Integer, db.ForeignKey("director.id"), nullable=False
+
+    directors = db.relationship(
+        'Movie',
+        secondary=MovieDirector.__table__,
+        back_populates='movie'
     )
 
-    director = db.relationship("Director", back_populates="movies")
-
-    users = db.relationship('UserMovie', back_populates='movie')
+    users = db.relationship(
+        'UserMovie',
+        secondary=UserMovie.__table__,
+        back_populates='movie'
+    )
 
     def __str__(self):
         return self.title
