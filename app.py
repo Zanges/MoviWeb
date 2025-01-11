@@ -118,7 +118,7 @@ def add_user():
     name = request.form['name']
     user = User(name=name)
     data_manager.add_new_user(user)
-    return redirect(url_for('users_list')), 201
+    return redirect(url_for('users_list'))
 
 
 
@@ -128,7 +128,7 @@ def delete_user():
     user_id = int(request.form['user_id'])
     user = data_manager.get_user_by_id(user_id)
     data_manager.delete_user(user)
-    return redirect(url_for('users_list')), 204
+    return redirect(url_for('users_list'))
 
 
 @app.route('/add_user_movie', methods=['POST'])
@@ -149,7 +149,7 @@ def add_movie():
     title = request.form['title']
     omdb_data = get_movie_by_title(title)
     if not omdb_data:
-        return redirect(url_for('add_new_movie_page')), 500
+        return redirect(url_for('add_new_movie_page'))
 
     directors = []
     for director in omdb_data['directors']:
@@ -193,4 +193,4 @@ def update_user_movie():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
