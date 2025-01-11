@@ -69,9 +69,9 @@ class SQLiteDataManager(DataManagerInterface):
         return Movie.query.filter_by(title=title).all()
 
     @staticmethod
-    def add_movie_to_user(user: User, movie: Movie) -> UserMovie:
+    def add_movie_to_user(user: User, movie: Movie, rating: int) -> UserMovie:
         """ Add a movie to a user's list """
-        user_movie = UserMovie(user=user, movie=movie)
+        user_movie = UserMovie(user=user, movie=movie, rating=rating)
         db.session.add(user_movie)
         db.session.commit()
         return user_movie
