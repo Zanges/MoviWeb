@@ -40,7 +40,7 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
 
-    .title_container, .director_container {
+    .title-container, .director-container {
         display: flex;
         justify-content: space-between;
         align-items: center;

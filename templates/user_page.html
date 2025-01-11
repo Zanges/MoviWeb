@@ -20,11 +20,11 @@
             {% set movie = user_movie.movie %}
             <li class="container-card movie-card">
                 <header>
-                    <div class="title_container">
+                    <div class="title-container">
                         <h2 class="title">{{ movie.title }}</h2>
                         <p class="year">{{ movie.year }}</p>
                     </div>
-                    <div class="director_container">
+                    <div class="director-container">
                         <p class="director">
                             {% for director in movie.directors %}
                                 {{ director.name }} {% if not loop.last %}, {% endif %}
@@ -47,6 +47,7 @@
     </ul>
     <footer>
         <a href="/user/{{ user.id }}/add_movie" class="btn btn-positive">Add Movie</a>
+        <a href="/user/{{ user.id }}/recommend_movie" class="btn btn-positive">Get Recommendation</a>
         <a href="/users" class="btn btn-negative">Back to User selection</a>
         <form action="/delete_user" method="post">
             <input type="hidden" name="user_id" value="{{ user.id }}">
