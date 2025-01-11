@@ -2,5 +2,5 @@
 /.idea/
 
 /.env
-
+/data/*
 /data_manager/data_manager_interface_unused.py

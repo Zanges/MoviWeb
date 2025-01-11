@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendation for {{ user.name }} - MovieWeb App</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/user_recommend_movie.css">
+</head>
+<body>
+    <header class="container-card">
+        <h1>Recommendation for {{ user.name }}</h1>
+        <p>This is a recommendation for a movie based on the movies you have rated.</p>
+    </header>
+    <main>
+        <div class="container-card">
+            <div class="title-container">
+                <h2 class="movie_title">{{ movie.title }}</h2>
+                <p class="year">{{ movie.year }}</p>
+            </div>
+            <div class="director-container">
+                <p class="director">{{ ", ".join(movie.directors) }}</p>
+                <p class="imdb-rating">IMDB Rating: {{ movie.imdb_rating }}</p>
+            </div>
+            <div class="summary-container">
+                <img src="{{ movie.poster }}" alt="{{ movie.title }} poster">
+                <p>{{ movie.summary }}</p>
+            </div>
+            <footer>
+                <form action="/add_movie" method="post">
+                    <input type="hidden" name="title" value="{{ movie.title }}">
+                    <button class="btn btn-positive" type="submit">Add to Movie Database</button>
+                </form>
+            </footer>
+        </div>
+    </main>
+    <footer class="container-card">
+        <a class="btn btn-positive" href="/user/{{ user.id }}">Go back to User</a>
+    </footer>
+</body>
+</html>

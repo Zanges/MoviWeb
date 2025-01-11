@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 
+from ai_integration import get_recommended_movie_name
 from data_manager.sqlite_data_manager import SQLiteDataManager
 from models import db
 from models.director import Director
@@ -94,6 +95,23 @@ def modify_movie_page(user_id, movie_id):
     ), 200
 
 
+@app.route('/user/<int:user_id>/recommend_movie', methods=['GET'])
+def recommend_movie_page(user_id):
+    """ display a page to recommend a movie to a user """
+    user = data_manager.get_user_by_id(user_id)
+    if not user:
+        return render_template('404.html'), 404
+
+    ai_recommendation_name = get_recommended_movie_name(user)
+    print(ai_recommendation_name)
+
+    omdb_data = get_movie_by_title(ai_recommendation_name)
+    if not omdb_data:
+        return redirect(url_for('add_new_movie_page')), 500
+
+    return render_template('user_recommend_movie.html', user=user, movie=omdb_data), 200
+
+
 @app.route('/add_user', methods=['POST'])
 def add_user():
     """ add a new user """
@@ -122,7 +140,7 @@ def add_user_movie():
     user = data_manager.get_user_by_id(user_id)
     movie = data_manager.get_movie_by_id(movie_id)
     data_manager.add_movie_to_user(user, movie, rating)
-    return redirect(url_for('user_page', user_id=user_id)), 201
+    return redirect(url_for('user_page', user_id=user_id))
 
 
 @app.route('/add_movie', methods=['POST'])
@@ -150,7 +168,7 @@ def add_movie():
     )
 
     data_manager.add_new_movie(movie)
-    return redirect(url_for('users_list')), 201
+    return redirect(url_for('users_list'))
 
 
 @app.route('/delete_user_movie', methods=['POST'])

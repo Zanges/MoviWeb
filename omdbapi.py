@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-API_KEY = os.getenv('OMDB_API_KEY')
+OMDB_API_KEY = os.getenv('OMDB_API_KEY')
 
-BASE_URL = f'http://www.omdbapi.com/?apikey={API_KEY}&'
+BASE_URL = f'http://www.omdbapi.com/?apikey={OMDB_API_KEY}&'
 
 
 def get_movie_by_title(title: str) -> dict:
@@ -21,6 +21,8 @@ def get_movie_by_title(title: str) -> dict:
             'year': response.json()['Year'],
             'poster': response.json()['Poster'],
             'directors': [director.strip() for director in response.json()['Director'].split(',')],
+            'summary': response.json()['Plot'],
+            'imdb_rating': response.json()['imdbRating']
         }
     return {}
 
