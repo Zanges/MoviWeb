@@ -9,7 +9,8 @@ class User(db.Model):
 
     movies = db.relationship(
         'UserMovie',
-        back_populates='user'
+        back_populates='user',
+        cascade='all, delete-orphan'
     )
 
     def __str__(self):
