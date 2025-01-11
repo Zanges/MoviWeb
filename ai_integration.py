@@ -21,15 +21,19 @@ SYSTEM_PROMPT = ('You add AI movie recommendation\n'
 def get_recommended_movie_name(user: User) -> str:
     """ Get a recommended movie name """
     user_movies = []
-    for user_movie in user.movies:
-        user_movies.append({
-            'title': user_movie.movie.title,
-            'rating': user_movie.rating
-        })
 
-    prompt = f'User has watched the following movies and rated them:\n'
-    for user_movie in user_movies:
-        prompt += f'```{user_movie["title"]}``` - {user_movie["rating"]}/10\n'
+    if user.movies:
+        for user_movie in user.movies:
+            user_movies.append({
+                'title': user_movie.movie.title,
+                'rating': user_movie.rating
+            })
+
+        prompt = f'User has watched the following movies and rated them:\n'
+        for user_movie in user_movies:
+            prompt += f'```{user_movie["title"]}``` - {user_movie["rating"]}/10\n'
+    else:
+        prompt = 'User has not watched any movies yet. Recommend a movie, that is generally well received.'
 
     response = client.chat.completions.create(
         model='gpt-4o-mini',
