@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User - MovieWeb App</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/add_user.css">
+</head>
+<body>
+    <div class="container-card">
+        <h1 class="title">Add User</h1>
+        <form action="/add_user" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required autofocus>
+            <button type="submit" class="btn btn-positive">Add User</button>
+        </form>
+        <footer>
+            <a href="/users" class="btn btn-negative">Back</a>
+        </footer>
+</body>
+</html>

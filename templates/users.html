@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users - MovieWeb App</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/users.css">
+</head>
+<body>
+    <div class="container-card">
+        <h1 class="title">Users</h1>
+        {% if users|length == 0 %}
+            <p class="empty">No users found</p>
+        {% endif %}
+        <ul class="user_list">
+            {% for user in users %}
+                <li class="user">
+                    <a href="/user/{{ user.id }}" class="btn btn-user">{{ user.name }}</a>
+                    <form action="/delete_user" method="post">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button class="btn btn-negative">
+                            <img src="/static/img/trash.svg" alt="Delete">
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <footer>
+            <a href="/add_user" class="btn btn-positive">Add User</a>
+        </footer>
+    </div>
+</body>
+</html>

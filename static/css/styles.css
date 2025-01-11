@@ -1,0 +1,54 @@
+@import url('/static/css/variables.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    width: 100%;
+
+}
+
+.container-card {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+a.btn, button.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button.btn {
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 0;
+}
+
+a.btn-positive, button.btn-positive {
+    background-color: var(--positive-color);
+}
+
+a.btn-negative, button.btn-negative {
+    background-color: var(--error-color);
+}

@@ -1,0 +1,87 @@
+@import url('/static/css/variables.css');
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    width: 100%;
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    text-align: center;
+}
+
+.empty {
+    min-width: 300px;
+    padding: 60px 0;
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+}
+
+.movie_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 2px;
+    list-style: none;
+}
+
+.movie-card {
+    width: 400px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .title_container, .director_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        .year, .director, .rating {
+            color: var(--lite-color);
+        }
+    }
+
+    .poster {
+        margin-top: 10px;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .btn-edit {
+        background-color: var(--info-color);
+    }
+}
+
+footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    align-items: center;
+
+    * {
+        flex: 1;
+
+        button {
+            width: 100%;
+        }
+    }
+
+    a, button {
+        font-size: 1.3rem;
+    }
+}

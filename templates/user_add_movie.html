@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Movie to {{ user.name }} - MovieWeb App</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/user_add_movie.css">
+</head>
+<body>
+    <div class="container-card">
+        <h1 class="title">Add Movie to {{ user.name }}</h1>
+        <form action="/add_user_movie" method="POST">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <label for="movie">Movie:</label>
+            <select id="movie" name="movie" required>
+                <option value="" disabled selected>Select a movie</option>
+                {% for movie in movies %}
+                    <option value="{{ movie.id }}">{{ movie.title }}</option>
+                {% endfor %}
+            </select>
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" min="0" max="10" required>
+            <button type="submit" class="btn btn-positive">Add</button>
+        </form>
+        <a class="btn btn-positive" href="/add_movie">Add new movie</a>
+        <footer>
+            <a href="/user/{{ user.id }}" class="btn btn-negative">Back</a>
+        </footer>
+    </div>
+</body>
+</html>

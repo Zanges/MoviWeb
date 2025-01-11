@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.name }} - MovieWeb App</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/user_page.css">
+</head>
+<body>
+    <div class="container-card">
+        <h1>{{ user.name }}'s Movie List</h1>
+    </div>
+    {% if user.movies|length == 0 %}
+        <div class="container-card empty">
+            <p class="empty">No movies found</p>
+        </div>
+    {% endif %}
+    <ul class="movie_list">
+        {% for user_movie in user.movies %}
+            {% set movie = user_movie.movie %}
+            <li class="container-card movie-card">
+                <header>
+                    <div class="title_container">
+                        <h2 class="title">{{ movie.title }}</h2>
+                        <p class="year">{{ movie.year }}</p>
+                    </div>
+                    <div class="director_container">
+                        <p class="director">
+                            {% for director in movie.directors %}
+                                {{ director.name }} {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="rating">{{ user_movie.rating }}/10</p>
+                    </div>
+                </header>
+                <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="poster">
+                <footer>
+                    <a href="/user/{{ user.id }}/modify_movie/{{ movie.id }}" class="btn btn-edit">Edit</a>
+                    <form action="/delete_user_movie" method="post">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button class="btn btn-negative">Delete</button>
+                    </form>
+                </footer>
+            </li>
+        {% endfor %}
+    </ul>
+    <footer>
+        <a href="/user/{{ user.id }}/add_movie" class="btn btn-positive">Add Movie</a>
+        <a href="/users" class="btn btn-negative">Back to User selection</a>
+        <form action="/delete_user" method="post">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button class="btn btn-negative">Delete User</button>
+        </form>
+    </footer>
+</body>
+</html>
