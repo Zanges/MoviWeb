@@ -97,10 +97,14 @@ class SQLiteDataManager(DataManagerInterface):
         db.session.commit()
 
     @staticmethod
-    def update_movie(movie: Movie) -> Movie:
-        """ Update a movie in the database """
+    def update_user_movie(user_id: int, movie_id: int, rating: int) -> UserMovie:
+        """ Update a user's rating of a movie """
+        user = User.query.get(user_id)
+        movie = Movie.query.get(movie_id)
+        user_movie = UserMovie.query.filter_by(user=user, movie=movie).first()
+        user_movie.rating = rating
         db.session.commit()
-        return movie
+        return user_movie
 
     @staticmethod
     def get_director_by_name(name: str) -> Director:
@@ -113,4 +117,12 @@ class SQLiteDataManager(DataManagerInterface):
         db.session.add(director)
         db.session.commit()
         return director
+
+    @staticmethod
+    def get_user_movie_rating(user_id: int, movie_id: int) -> int:
+        """ Get a user's rating of a movie """
+        user = User.query.get(user_id)
+        movie = Movie.query.get(movie_id)
+        user_movie = UserMovie.query.filter_by(user=user, movie=movie).first()
+        return user_movie.rating
     
