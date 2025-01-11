@@ -1,0 +1,18 @@
+.container-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    h1 {
+        width: 100%;
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin: 22px;
+    }
+}
